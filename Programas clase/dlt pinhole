@@ -1,0 +1,90 @@
+"""
+Actividad 4 - Pinhole + DLT
+Nombre: Dulce Abril
+Fecha: 28 de abril de 2026
+
+Descripción:
+Implementación del modelo Pinhole Camera Model y del método DLT
+usando una laptop como objeto real.
+"""
+
+import numpy as np
+
+# -------------------------
+# PARTE 1: PINHOLE MODEL
+# -------------------------
+
+print("=== PINHOLE CAMERA MODEL ===")
+
+# Puntos reales (X, Y, Z)
+# Usamos Z = 50 (simulando distancia de la cámara)
+points_3D = [
+    (0, 0, 50),
+    (37.5, 0, 50),
+    (37.5, 25, 50),
+    (0, 25, 50)
+]
+
+f = 1  # distancia focal
+
+print("Proyecciones:")
+
+points_2D = []
+
+for (X, Y, Z) in points_3D:
+    x = f * X / Z
+    y = f * Y / Z
+    points_2D.append([x, y, 1])
+    print(f"({X},{Y},{Z}) -> ({x:.3f}, {y:.3f})")
+
+points_2D = np.array(points_2D)
+
+# -------------------------
+# PARTE 2: DLT
+# -------------------------
+
+print("\n=== DLT ===")
+
+# Puntos reales en homogéneas
+X = np.array([
+    [0, 0, 0, 1],
+    [37.5, 0, 0, 1],
+    [37.5, 25, 0, 1],
+    [0, 25, 0, 1]
+])
+
+# Puntos en pixeles (de tu imagen)
+x = np.array([
+    [900, 900, 1],
+    [5000, 1100, 1],
+    [4700, 3500, 1],
+    [800, 3200, 1]
+])
+
+# Construcción de A
+A = []
+
+for i in range(len(X)):
+    X_i = X[i]
+    x_i, y_i, w_i = x[i]
+
+    A.append([
+        0, 0, 0, 0,
+        -w_i*X_i[0], -w_i*X_i[1], -w_i*X_i[2], -w_i*X_i[3],
+        y_i*X_i[0], y_i*X_i[1], y_i*X_i[2], y_i*X_i[3]
+    ])
+
+    A.append([
+        w_i*X_i[0], w_i*X_i[1], w_i*X_i[2], w_i*X_i[3],
+        0, 0, 0, 0,
+        -x_i*X_i[0], -x_i*X_i[1], -x_i*X_i[2], -x_i*X_i[3]
+    ])
+
+A = np.array(A)
+
+# Resolver con SVD
+U, S, Vt = np.linalg.svd(A)
+P = Vt[-1].reshape(3, 4)
+
+print("Matriz de proyección P:")
+print(P)
