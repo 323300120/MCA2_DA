@@ -1,1 +1,52 @@
 
+"""
+Actividad 4 - Algoritmo RSA
+Nombre: Dulce Abril
+Fecha: 30 de marzo de 2026
+
+Descripción:
+Este programa implementa el algoritmo RSA para generar
+una clave pública y una clave privada a partir de dos números primos.
+"""
+
+import math
+
+# -------------------------
+# Paso 1: Elegir primos
+# -------------------------
+p = 101
+q = 113
+
+# -------------------------
+# Paso 2: Calcular n
+# -------------------------
+n = p * q
+
+# -------------------------
+# Paso 3: Función de Euler
+# -------------------------
+phi = (p - 1) * (q - 1)
+
+# -------------------------
+# Paso 4: Elegir e
+# -------------------------
+e = 17
+
+# Verificar que e sea coprimo con phi(n)
+print("gcd(e, phi) =", math.gcd(e, phi))
+
+# -------------------------
+# Paso 5: Inverso modular
+# -------------------------
+def mod_inverse(e, phi):
+    for d in range(1, phi):
+        if (e * d) % phi == 1:
+            return d
+
+d = mod_inverse(e, phi)
+
+# -------------------------
+# Resultado
+# -------------------------
+print("Clave pública (n, e):", (n, e))
+print("Clave privada (n, d):", (n, d))
