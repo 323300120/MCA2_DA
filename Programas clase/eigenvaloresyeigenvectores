@@ -1,0 +1,69 @@
+"""
+Eigenvalores y Eigenvectores
+Actividad 6 - MCA2
+"""
+
+import numpy as np
+from sympy import Matrix
+
+# =========================================
+# INCISO a) MATRIZ DE HILBERT 3x3
+# =========================================
+
+A1 = np.array([
+    [1, 1/2, 1/3],
+    [1/2, 1/3, 1/4],
+    [1/3, 1/4, 1/5]
+])
+
+print("\n--- INCISO a) ---")
+
+eigvals1, eigvecs1 = np.linalg.eig(A1)
+
+print("Eigenvalores:")
+print(eigvals1)
+
+print("Eigenvectores:")
+print(eigvecs1)
+
+
+# =========================================
+# INCISO b) MATRIZ DE VANDERMONDE
+# =========================================
+
+A2 = np.array([
+    [1, 1, 1, 1],
+    [1.01, 1.02, 1.03, 1.04],
+    [1.01**2, 1.02**2, 1.03**2, 1.04**2],
+    [1.01**3, 1.02**3, 1.03**3, 1.04**3]
+])
+
+print("\n--- INCISO b) ---")
+
+eigvals2, eigvecs2 = np.linalg.eig(A2)
+
+print("Eigenvalores:")
+print(eigvals2)
+
+print("Eigenvectores:")
+print(eigvecs2)
+
+
+# =========================================
+# INCISO c) MATRIZ 2x2
+# =========================================
+
+A3 = np.array([
+    [1, 2],
+    [2, 4.0001]
+])
+
+print("\n--- INCISO c) ---")
+
+eigvals3, eigvecs3 = np.linalg.eig(A3)
+
+print("Eigenvalores:")
+print(eigvals3)
+
+print("Eigenvectores:")
+print(eigvecs3)
